@@ -7,11 +7,22 @@ const { nanoid } = require('nanoid');
 const app = express();
 app.use(cors());
 
+// Creating sessions object as global variable.
+const sessions = {};
+
 // Middleware for creating new session
 app.post('/', function (req, res) {
+    // Generating a new session Id
+    const sessionId = nanoid(10);
+
+    // Set sessionId as new key of sessions object, set the value to 1
+    sessions[sessionId] = 1;
+
     // sending a response, treat the parameter provided as JSON
     // and convert the parameter to JSON string and put it in the response body
-    res.json('Creating new session');
+    res.json({
+        session_id: sessionId,
+    });
 });
 
 // Start listening to port 8000
