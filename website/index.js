@@ -26,4 +26,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 sessionIdField.innerHTML = sessionId;
             });
     });
+
+    // Get a reference of the guess button
+    const guessButton = document.getElementById('guess-button');
+
+    // Add a event listener for the click event
+    guessButton.addEventListener('click', function () {
+        // When the button is click, we want to alert
+        alert('Guess Button clicked!');
+    });
 });
