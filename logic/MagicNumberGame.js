@@ -19,4 +19,21 @@ module.exports = class {
     progress() {
         return [this.lowerBound, this.upperBound];
     }
+
+    // Guess method takes in 1 parameter, the attempt.
+    guess(attempt) {
+        if (attempt < this.magicNumber) {
+            // if the attempt is lesser than the magic number, update lower bound.
+            this.lowerBound = Math.max(this.lowerBound, attempt);
+        } else if (attempt > this.magicNumber) {
+            // if the attempt is greater than the magic number, update upper bound.
+            this.upperBound = Math.min(this.upperBound, attempt);
+        } else {
+            // if the attempt is the magic number, set both bound to the magic number.
+            this.lowerBound = this.magicNumber;
+            this.upperBound = this.magicNumber;
+        }
+        // returns the progress
+        return this.progress();
+    }
 };
