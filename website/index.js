@@ -8,5 +8,6 @@ document.addEventListener('DOMContentLoaded', function () {
     createSessionButton.addEventListener('click', function () {
         // This callback function is executed when the event is fired
         alert('Button pressed!');
+        fetch('http://localhost:8000', { method: 'POST' });
     });
 });
