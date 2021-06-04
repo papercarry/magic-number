@@ -29,6 +29,25 @@ app.post('/', function (req, res) {
     });
 });
 
+// Middleware for making attempt
+// /:sessionId to extract param from path
+app.put('/:sessionId', function (req, res) {
+    // extract sessionId from params
+    const sessionId = req.params.sessionId;
+
+    // extract attempt from query
+    const attempt = req.query.attempt;
+
+    // retrieve appropriate magicNumberGame based on the session Id
+    const magicNumberGame = sessions[sessionId];
+
+    // Make a guess and get the progress
+    const progress = magicNumberGame.guess(attempt);
+
+    // Send the progress, treat it as JSON and put the JSON string in the response body
+    return res.json(progress);
+});
+
 // Start listening to port 8000
 app.listen(8000, function () {
     console.log('Magic Number Game app listening on Port 8000');
