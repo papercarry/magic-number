@@ -34,5 +34,19 @@ document.addEventListener('DOMContentLoaded', function () {
     guessButton.addEventListener('click', function () {
         // When the button is click, we want to alert
         alert('Guess Button clicked!');
+
+        // Get reference to the 2 input field
+        const sessionIdInput = document.getElementById('session-id-input');
+        const attemptInput = document.getElementById('attempt-input');
+
+        // Extract the value of the 2 input field and put into variables
+        const sessionId = sessionIdInput.value;
+        const attempt = attemptInput.value;
+
+        // Create the url
+        const url = `http://localhost:8000/${sessionId}?attempt=${attempt}`;
+
+        // Send HTTP Request
+        fetch(url, { method: 'PUT' });
     });
 });
