@@ -3,6 +3,9 @@ const express = require('express');
 const cors = require('cors');
 const { nanoid } = require('nanoid');
 
+// Import MagicNumberGame
+const MagicNumberGame = require('../logic/MagicNumberGame');
+
 // Creating the app and enabling cors
 const app = express();
 app.use(cors());
@@ -15,8 +18,9 @@ app.post('/', function (req, res) {
     // Generating a new session Id
     const sessionId = nanoid(10);
 
-    // Set sessionId as new key of sessions object, set the value to 1
-    sessions[sessionId] = 1;
+    // Set sessionId as new key of sessions object
+    // Set the value to a new MagicNumberGame instance with max default at 100
+    sessions[sessionId] = new MagicNumberGame(100);
 
     // sending a response, treat the parameter provided as JSON
     // and convert the parameter to JSON string and put it in the response body
