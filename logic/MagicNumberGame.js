@@ -14,4 +14,9 @@ module.exports = class {
         this.upperBound = max;
     }
 
+    // Progress method takes in no parameter,
+    // returns an array of 2 values, the lower bound and upper bound
+    progress() {
+        return [this.lowerBound, this.upperBound];
+    }
 };
