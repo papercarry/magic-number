@@ -2,6 +2,7 @@
 const express = require('express');
 const cors = require('cors');
 const { nanoid } = require('nanoid');
+const createHttpError = require('http-errors');
 
 // Import MagicNumberGame
 const MagicNumberGame = require('../logic/MagicNumberGame');
@@ -31,7 +32,7 @@ app.post('/', function (req, res) {
 
 // Middleware for making attempt
 // /:sessionId to extract param from path
-app.put('/:sessionId', function (req, res) {
+app.put('/:sessionId', function (req, res, next) {
     // extract sessionId from params
     const sessionId = req.params.sessionId;
 
@@ -43,30 +44,22 @@ app.put('/:sessionId', function (req, res) {
     // Check if attempt is a number
     if (Number.isNaN(attemptNumber)) {
         // return to end the function immediately after sending response.
-        return res.status(400).json({
-            error: `Attempt (${attempt}) is Not a Number!`,
-        });
+        return next(createHttpError(400, `Attempt (${attempt}) is Not an Number!`));
     }
 
     // Check if attempt is an integer
     if (!Number.isInteger(attemptNumber)) {
-        return res.status(400).json({
-            error: `Attempt (${attempt}) is Not an Integer!`,
-        });
+        return next(createHttpError(400, `Attempt (${attempt}) is Not an Integer!`));
     }
 
     // Check if attempt is a positive integer
     if (attemptNumber < 0) {
-        return res.status(400).json({
-            error: `Attempt (${attempt}) is Not a Positive Integer!`,
-        });
+        return next(createHttpError(400, `Attempt (${attempt}) is Not a Positive Integer!`));
     }
 
     // Check if sessionId exists
     if (!sessions[sessionId]) {
-        return res.status(400).json({
-            error: `Session Id (${sessionId}) not found`,
-        });
+        return next(createHttpError(400, `Attempt (${sessionId}) not found!`));
     }
 
     // retrieve appropriate magicNumberGame based on the session Id
@@ -77,6 +70,16 @@ app.put('/:sessionId', function (req, res) {
 
     // Send the progress, treat it as JSON and put the JSON string in the response body
     return res.json(progress);
+});
+
+// Error handling middleware, Note how it has 4 parameters instead of 3.
+app.use(function (err, req, res, next) {
+    const status = err.status || 500;
+    const message = err.message || 'Unknown Error';
+    console.log(err);
+    return res.status(status).json({
+        error: message,
+    });
 });
 
 // Start listening to port 8000
