@@ -38,6 +38,30 @@ app.put('/:sessionId', function (req, res) {
     // extract attempt from query
     const attempt = req.query.attempt;
 
+    // convert attempt from string to number
+    const attemptNumber = Number(attempt);
+    // Check if attempt is a number
+    if (Number.isNaN(attemptNumber)) {
+        // return to end the function immediately after sending response.
+        return res.status(400).json({
+            error: `Attempt (${attempt}) is Not a Number!`,
+        });
+    }
+
+    // Check if attempt is an integer
+    if (!Number.isInteger(attemptNumber)) {
+        return res.status(400).json({
+            error: `Attempt (${attempt}) is Not an Integer!`,
+        });
+    }
+
+    // Check if attempt is a positive integer
+    if (attemptNumber < 0) {
+        return res.status(400).json({
+            error: `Attempt (${attempt}) is Not a Positive Integer!`,
+        });
+    }
+
     // retrieve appropriate magicNumberGame based on the session Id
     const magicNumberGame = sessions[sessionId];
 
