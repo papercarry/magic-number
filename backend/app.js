@@ -62,6 +62,13 @@ app.put('/:sessionId', function (req, res) {
         });
     }
 
+    // Check if sessionId exists
+    if (!sessions[sessionId]) {
+        return res.status(400).json({
+            error: `Session Id (${sessionId}) not found`,
+        });
+    }
+
     // retrieve appropriate magicNumberGame based on the session Id
     const magicNumberGame = sessions[sessionId];
 
