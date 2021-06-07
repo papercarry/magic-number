@@ -57,6 +57,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 return response.json();
             })
             .then(function (json) {
+                if (json.error) throw json.error;
+
                 // Extract the lower and upper bound
                 const lowerBound = json[0];
                 const upperBound = json[1];
@@ -72,6 +74,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 // Update input bound
                 attemptInput.setAttribute('min', lowerBound + 1);
                 attemptInput.setAttribute('max', upperBound - 1);
+            })
+            .catch(function (error) {
+                alert(error);
             });
     });
 });
