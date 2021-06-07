@@ -72,6 +72,10 @@ app.put('/:sessionId', function (req, res, next) {
     return res.json(progress);
 });
 
+app.use(function (req, res, next) {
+    return next(createHttpError(404, `Not found ${req.method} ${req.originalUrl}`));
+});
+
 // Error handling middleware, Note how it has 4 parameters instead of 3.
 app.use(function (err, req, res, next) {
     const status = err.status || 500;
