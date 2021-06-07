@@ -39,8 +39,8 @@ document.addEventListener('DOMContentLoaded', function () {
         const sessionIdInput = document.getElementById('session-id-input');
         const attemptInput = document.getElementById('attempt-input');
 
-        // Check attemptInput validity
-        if (!attemptInput.reportValidity()) {
+        // Check sessionId validity & Check attemptInput validity
+        if (!sessionIdInput.reportValidity() || !attemptInput.reportValidity()) {
             return;
         }
 
