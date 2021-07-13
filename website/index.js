@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', DOMContentLoaded);
 
 function onClickFunction() {
     alert("Clicked");
-    fetch('http://localhost:8000/website/index.html',{method:'POST'});
+    fetch('http://localhost:8000/',{method:'POST'});
 }
 
 function DOMContentLoaded() {
