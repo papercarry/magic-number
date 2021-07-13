@@ -3,8 +3,12 @@ document.getElementById("create-session-button").addEventListener("click", onCli
 document.addEventListener('DOMContentLoaded', DOMContentLoaded);
 
 function onClickFunction() {
-    alert("Clicked");
-    fetch('http://localhost:8000/',{method:'POST'});
+    //alert("Clicked");
+    fetch('http://localhost:8000/', { method: 'POST' })
+        .then(response => response.json())
+        .then(data=> {
+            document.getElementById("sessid").textContent += data.session_id
+        })
 }
 
 function DOMContentLoaded() {

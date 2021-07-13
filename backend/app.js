@@ -1,15 +1,26 @@
 const express = require('express');
 const cors = require('cors');
-const nanoid = require('nanoid');
+const { nanoid } = require('nanoid')
+
 
 var app = express();
 
+var sessions = {};
+
+
 app.use(cors());
 
-var creatingnewsession = function (req,res,next){
-    alert("Creating new session");
-}
+//var creatingnewsession = function (req,res,next){
+//    res.send("Creating new session");
+//}
 
-app.post('/',creatingnewsession, function (req, res) {
-    res.send('Hello World!')
-  })
+app.post('/', function (req, res) {
+    var sessionId = nanoid(10);
+    sessions["session_id"] = sessionId
+    //res.send('Creating new session!')
+    res.send(sessions)
+})
+
+app.listen(8000, function () {
+    console.log('Magic Number Game listening on port 8000')
+})
