@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const { nanoid } = require('nanoid')
-
+const MagicNumberGame = require("../logic/MagicNumberGame")
 
 var app = express();
 
@@ -16,9 +16,19 @@ app.use(cors());
 
 app.post('/', function (req, res) {
     var sessionId = nanoid(10);
-    sessions["session_id"] = sessionId
-    //res.send('Creating new session!')
-    res.send(sessions)
+    sessions["session_Id"] = new MagicNumberGame(100);
+    res.json({
+        session_id: sessionId,
+    });
+});
+
+app.put("/:sessionId",function(req,res){
+    var sessionId = req.params.sessionId;
+    var attempt = req.query.attempt
+    console.log(attempt)
+    var magicNumberGame = sessions[sessionId];
+    var progress = magicNumberGame.guess(attempt);
+    return res.json(progress);
 })
 
 app.listen(8000, function () {
